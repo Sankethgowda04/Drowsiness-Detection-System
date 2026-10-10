@@ -1,0 +1,420 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drowsiness Detection | Driver Safety</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">D</div>
+            <div>
+                <h2>DriveSafe</h2>
+                <span>MONITORING SYSTEM</span>
+            </div>
+        </div>
+
+        <div class="nav-label">WORKSPACE</div>
+
+        <div class="nav-item active">
+            <span class="nav-icon">▦</span>
+            <span>Dashboard</span>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-icon">◉</span>
+            <span>Live Monitoring</span>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-icon">◷</span>
+            <span>Safety Status</span>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-status">
+                <span class="connection-dot"></span>
+                <div>
+                    <strong>System Interface</strong>
+                    <small>Dashboard ready</small>
+                </div>
+            </div>
+
+            <div class="sidebar-version">DROWSINESS DETECTION</div>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div class="breadcrumb">
+                Workspace <span>/</span> <strong>Dashboard</strong>
+            </div>
+
+            <div class="topbar-right">
+                <span class="topbar-dot"></span>
+                <span>Monitoring Dashboard</span>
+                <div class="profile-avatar">DS</div>
+            </div>
+
+        </header>
+
+
+        <!-- PAGE INTRO -->
+        <section class="page-intro">
+
+            <div>
+                <div class="eyebrow">
+                    <span class="eyebrow-line"></span>
+                    DRIVER SAFETY TECHNOLOGY
+                </div>
+
+                <h1>Drowsiness <span>Detection</span></h1>
+
+                <p>
+                    Monitor eye activity and identify signs of driver
+                    drowsiness in real time.
+                </p>
+            </div>
+
+            <div class="session-card">
+                <div class="session-icon">◉</div>
+                <div>
+                    <small>MONITORING MODE</small>
+                    <strong>Live Camera</strong>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- MAIN MONITORING GRID -->
+        <section class="monitor-grid">
+
+            <!-- CAMERA PANEL -->
+            <section class="panel camera-panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <span class="panel-kicker">CAMERA FEED</span>
+                        <h2>Live Monitoring</h2>
+                    </div>
+
+                    <div class="live-badge">
+                        <span></span>
+                        LIVE
+                    </div>
+                </div>
+
+                <div class="camera-frame">
+
+                    <div class="camera-top-label">
+                        <span class="camera-dot"></span>
+                        CAMERA VIEW
+                    </div>
+
+                    <img
+                        src="{{ url_for('video_feed') }}"
+                        alt="Live webcam feed for drowsiness detection"
+                        class="video-feed"
+                    >
+
+                    <div class="camera-corner corner-tl"></div>
+                    <div class="camera-corner corner-tr"></div>
+                    <div class="camera-corner corner-bl"></div>
+                    <div class="camera-corner corner-br"></div>
+
+                </div>
+
+                <div class="camera-footer">
+                    <div class="camera-info">
+                        <span class="camera-info-icon">◉</span>
+                        <div>
+                            <strong>Webcam Monitoring</strong>
+                            <small>Video feed from the detection system</small>
+                        </div>
+                    </div>
+
+                    <div class="camera-footer-right">
+                        <span class="mini-dot"></span>
+                        Connected to feed
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- SAFETY STATUS PANEL -->
+            <section class="panel safety-panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <span class="panel-kicker">SYSTEM ANALYSIS</span>
+                        <h2>Safety Status</h2>
+                    </div>
+
+                    <div class="shield-icon">✓</div>
+                </div>
+
+
+                <!-- STATUS: KEEP THIS ID -->
+                <div id="status" class="status-box normal">
+
+                    <div class="status-symbol">
+                        <span class="status-symbol-inner">✓</span>
+                    </div>
+
+                    <div class="status-content">
+                        <span class="status-caption">CURRENT CONDITION</span>
+
+                        <h3 class="status-text">Normal</h3>
+
+                        <p class="status-description">
+                            Monitoring eye activity for signs of drowsiness.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- TIMER CARD -->
+                <div class="timer-card">
+
+                    <div class="timer-card-top">
+                        <div class="timer-icon">◷</div>
+
+                        <div>
+                            <span class="timer-label">EYE CLOSURE TIMER</span>
+                            <p>Continuous eye-closure duration</p>
+                        </div>
+                    </div>
+
+                    <!-- KEEP THIS ID -->
+                    <div id="timer" class="timer">0 <span>seconds</span></div>
+
+                    <div class="timer-track">
+                        <div class="timer-track-fill"></div>
+                    </div>
+
+                    <div class="timer-footnote">
+                        <span>Elapsed time</span>
+                        <span>Detection active</span>
+                    </div>
+
+                </div>
+
+
+                <!-- RESET BUTTON -->
+                <button
+                    type="button"
+                    class="reset-button"
+                    onclick="resetAlarm()"
+                >
+                    <span class="reset-icon">↻</span>
+                    Reset Alarm
+                    <span class="button-arrow">→</span>
+                </button>
+
+
+                <div class="safety-notice">
+                    <span class="notice-icon">i</span>
+                    <p>
+                        This dashboard is a monitoring prototype.
+                        Always prioritize rest and safe driving.
+                    </p>
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- HOW IT WORKS -->
+        <section class="process-section">
+
+            <div class="section-heading">
+                <div>
+                    <span class="panel-kicker">SYSTEM OVERVIEW</span>
+                    <h2>How It Works</h2>
+                </div>
+
+                <span class="process-subtitle">Three simple stages</span>
+            </div>
+
+
+            <div class="process-grid">
+
+                <div class="process-card">
+                    <div class="process-number">01</div>
+
+                    <div class="process-icon camera-process-icon">◉</div>
+
+                    <div class="process-text">
+                        <h3>Capture</h3>
+                        <p>The webcam provides a live video feed.</p>
+                    </div>
+
+                    <span class="process-arrow">→</span>
+                </div>
+
+
+                <div class="process-card">
+                    <div class="process-number">02</div>
+
+                    <div class="process-icon eye-process-icon">◎</div>
+
+                    <div class="process-text">
+                        <h3>Detect</h3>
+                        <p>The system analyzes eye activity.</p>
+                    </div>
+
+                    <span class="process-arrow">→</span>
+                </div>
+
+
+                <div class="process-card">
+                    <div class="process-number">03</div>
+
+                    <div class="process-icon alert-process-icon">!</div>
+
+                    <div class="process-text">
+                        <h3>Alert</h3>
+                        <p>The system signals a detected alarm condition.</p>
+                    </div>
+
+                    <span class="process-arrow">✓</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="main-footer">
+            <span>DRIVESAFE <span class="footer-separator">/</span> DROWSINESS DETECTION</span>
+
+            <span>
+                Built for driver awareness
+                <span class="footer-heart">♥</span>
+            </span>
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- EXISTING FLASK STATUS AND RESET CONNECTIONS -->
+<script>
+
+    function updateStatus() {
+
+        fetch('/status')
+            .then(response => response.json())
+            .then(data => {
+
+                const statusBox = document.getElementById('status');
+                const timer = document.getElementById('timer');
+
+                /*
+                 * Preserve the existing backend fields:
+                 * alarm_on, eyes_closed, eyes_closed_counter
+                 */
+
+                const alarmOn = data.alarm_on;
+                const eyesClosed = data.eyes_closed;
+                const counter = data.eyes_closed_counter;
+
+                timer.innerHTML = `${counter} <span>seconds</span>`;
+
+                if (alarmOn) {
+
+                    statusBox.className = 'status-box alarm';
+
+                    statusBox.querySelector('.status-symbol-inner').textContent = '!';
+
+                    statusBox.querySelector('.status-caption').textContent =
+                        'ATTENTION REQUIRED';
+
+                    statusBox.querySelector('.status-text').textContent =
+                        'Drowsiness Alert';
+
+                    statusBox.querySelector('.status-description').textContent =
+                        'The system has detected a drowsiness alarm condition.';
+
+                } else if (eyesClosed) {
+
+                    statusBox.className = 'status-box warning';
+
+                    statusBox.querySelector('.status-symbol-inner').textContent = '◷';
+
+                    statusBox.querySelector('.status-caption').textContent =
+                        'EYE ACTIVITY';
+
+                    statusBox.querySelector('.status-text').textContent =
+                        'Eyes Closed';
+
+                    statusBox.querySelector('.status-description').textContent =
+                        'Eye closure detected. Monitoring continues.';
+
+                } else {
+
+                    statusBox.className = 'status-box normal';
+
+                    statusBox.querySelector('.status-symbol-inner').textContent = '✓';
+
+                    statusBox.querySelector('.status-caption').textContent =
+                        'CURRENT CONDITION';
+
+                    statusBox.querySelector('.status-text').textContent =
+                        'Normal';
+
+                    statusBox.querySelector('.status-description').textContent =
+                        'Monitoring eye activity for signs of drowsiness.';
+
+                }
+
+            })
+            .catch(error => {
+                console.error('Unable to fetch system status:', error);
+            });
+
+    }
+
+
+    function resetAlarm() {
+
+        fetch('/reset_alarm')
+            .then(() => updateStatus())
+            .catch(error => {
+                console.error('Unable to reset alarm:', error);
+            });
+
+    }
+
+
+    // Refresh status every second, as in the original flow.
+    updateStatus();
+    setInterval(updateStatus, 1000);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Drowsiness Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🚗 Drowsiness Detection System</h1>
+
+    <div class="video-container">
+        <img src="{{ url_for('video_feed') }}" alt="Webcam Feed">
+    </div>
+
+    <div id="status" class="status-box normal">
+        ✅ Status: Monitoring
+    </div>
+
+    <div id="timer" class="timer">
+        ⏱️ Eyes closed: 0 seconds
+    </div>
+
+    <button onclick="resetAlarm()">🔄 Reset Alarm</button>
+
+    <div class="info">
+        <h3>How it works:</h3>
+        <ul>
+            <li>Monitors your eyes using webcam</li>
+            <li>When eyes close, timer counts in real seconds</li>
+            <li>Alarm triggers after 40 seconds</li>
+            <li>Timer resets when eyes open</li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+
+function updateStatus() {
+
+    fetch('/status')
+    .then(response => response.json())
+    .then(data => {
+
+        const statusDiv = document.getElementById('status');
+        const timerDiv = document.getElementById('timer');
+
+        if (data.alarm_on) {
+
+            statusDiv.innerHTML = '🚨 ALARM! Eyes closed too long!';
+            statusDiv.className = 'status-box alarm';
+
+        } 
+        else if (data.eyes_closed) {
+
+            statusDiv.innerHTML = '⚠️ Warning: Eyes closed';
+            statusDiv.className = 'status-box warning';
+
+        } 
+        else {
+
+            statusDiv.innerHTML = '✅ Status: Monitoring';
+            statusDiv.className = 'status-box normal';
+
+        }
+
+        timerDiv.innerHTML = `⏱️ Eyes closed: ${data.eyes_closed_counter} seconds`;
+
+    })
+    .catch(error => console.log(error));
+}
+
+function resetAlarm() {
+    fetch('/reset_alarm').then(() => updateStatus());
+}
+
+setInterval(updateStatus, 1000);
+updateStatus();
+
+</script>
+
+</body>
+</html>
